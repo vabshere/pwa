@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Phoenix</title>
+    <base href="./">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    </style>
+</head>
+
+<body>
+    <div id="start">
+        <h1>Hi <span id="name"></span></h1>
+        <p>Want to take a quiz?</p>
+        <button onclick="startQ()" id="start">Start</button>
+    </div>
+
+    <div id="questions">
+        <header>
+            Quiz <span id="date"></span>
+        </header>
+        <div class="quesNum">
+            Question <span id="num"></span> of <span id="length"></span>
+        </div>
+        <div id="question"></div>
+        <div class="options">
+            <div class="options1">
+                <div class="radio" onclick="switchRadio(this)">
+                    <input type="radio" id="option1" name="option" value="0"><span class="checkmark"></span><span
+                        id="option1Val"></span><br>
+                </div>
+                <div class="radio" onclick="switchRadio(this)">
+                    <input type="radio" id="option2" name="option" value="1"><span class="checkmark"></span><span
+                        id="option2Val"></span><br>
+                </div>
+            </div>
+            <div class="options2">
+                <div class="radio" onclick="switchRadio(this)">
+                    <input type="radio" id="option3" name="option" value="2"><span class="checkmark"></span><span
+                        id="option3Val"></span><br>
+                </div>
+                <div class="radio" onclick="switchRadio(this)">
+                    <input type="radio" id="option4" name="option" value="3"><span class="checkmark"></span><span
+                        id="option4Val"></span><br>
+                </div>
+            </div>
+        </div>
+        <button onclick="previous()" id="previous"><span>&#8249;</span></button>
+        <button onclick="next()" id="next"><span>&#8250;</span></button>
+        <button id="submit" onclick="submit()">&#10003;</button>
+    </div>
+
+    <div id="finish">
+        <img src="./1.jpg" alt="" id="bg">
+        <img src="./3.png" alt="" id="sun">
+        <div class="banner">
+            <div id="score"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./index.js"></script>
+</body>
+
+</html>
