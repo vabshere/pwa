@@ -85,14 +85,12 @@
 
         }
 
-        #submit,
-        #start {
+        #submit {
             border-bottom: 1px solid rgba(28, 227, 125, 0.5);
             background: #4bb078;
         }
 
-        #submit:hover,
-        #start:hover {
+        #submit:hover{
             box-shadow: 0px 10px 10px rgba(15, 165, 60, 0.2);
         }
 
@@ -261,21 +259,23 @@
             background: black;
         }
 
-        #finish {
+        #finish,
+        .finish {
             width: 100vw;
             position: absolute;
             top: 0;
             left: 0;
             background-attachment: fixed;
             background-repeat: no-repeat;
-            background-image: url("./1.jpg");
+            background-image: url("./1.png");
             background-size: 100vw auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            /* display: flex; */
+            /* align-items: center;  */
+            /* justify-content: center;  */
         }
 
-        #bg {
+        #bg,
+        .bg {
             width: 100vw;
             top: 0;
             left: 0;
@@ -283,13 +283,20 @@
             z-index: 0;
         }
 
-        #sun {
-            width: 60%;
+        #sun,
+        .sun {
+            width: 30%;
             position: absolute;
             top: 20%;
-            left: 50%;
+            left: 66%;
             margin-left: -30%;
             z-index: 1;
+        }
+
+        .sun{
+            left: 50%;
+            width: 56%;
+            top: 13%;
         }
 
         .banner {
@@ -298,28 +305,56 @@
             top: 10%;
             left: 0;
             width: 100%;
-            height: 90%;
+            height: 60%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: url("./2.png") center no-repeat;
             background-size: 100% 100%;
         }
 
-        #score {
+        .score {
             color: white;
             font-size: 200%;
             transform: translateY(30%);
             z-index: 5;
+            margin-bottom: 8px;
+        }
+
+        .score2 {
+            font-size: 140%;
+            color: rgb(218, 218, 218);
+            transform: translateY(30%);
+            z-index: 5;
+        }
+
+        .button {
+            box-shadow: 0px 0px 0px rgba(15, 165, 60, 0.0);
+            background: rgba(20, 224, 133, 1);
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            left: 50%;
+            padding: 15px;
+            font-size: 24px;
+            margin-left: -25%;
+        }
+        #welcome{
+            width: 80%;
+            font-size: 140%;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <div id="start">
-        <h1>Hi <span id="name"></span></h1>
-        <p>Want to take a quiz?</p>
-        <button onclick="startQ()" id="start">Start</button>
+    <div id="start" class="finish">
+        <img src="./1.png" alt="" class="bg">
+        <img src="./5.png" alt="" class="sun">
+        <div class="banner">
+            <div class="score" id="welcome">हे प्रश्न सोडवून बनु शक्ता आपण तलाठी|</div>
+        </div>
+        <button onclick="startQ()" class="button" style="left: 62%">शुरु करा</button>
     </div>
 
     <div id="questions">
@@ -358,11 +393,13 @@
     </div>
 
     <div id="finish">
-        <img src="./1.jpg" alt="" id="bg">
+        <img src="./1.png" alt="" id="bg">
         <img src="./3.png" alt="" id="sun">
         <div class="banner">
-            <div id="score"></div>
+            <div class="score">Your Score: <span id="score"></span></div>
+            <div class="score2">Highest Score: <span>5/5</span></div>
         </div>
+        <button class="button">अधिक चाचण्या घ्या</button>
     </div>
     <script>
         var state = 0
@@ -395,6 +432,19 @@
         //   xmlHttp.send(null)
         //   return xmlHttp.responseText
         // }
+
+        var welcomeArr = [
+            'हे प्रश्न सोडवून बनु शक्ता आपण तलाठी|',
+            'ज़े तलाठी ज़ाले, त्यांनी सुद्धा हेच प्रश्न सोडवले होते| तुम्ही सोडउ शक्ता का?',
+            'ज़र तुम्ही तलाठी बनने योग्य आहात, तर ह्या प्रश्नांचे उत्तर द्या, आणि ज़ाणुन घ्या|',
+        ]
+        var welcTemp = 1
+        setInterval(() => {
+            document.getElementById('welcome').innerText = welcomeArr[welcTemp];
+            console.log(welcTemp);
+            ++welcTemp;
+            welcTemp = welcTemp % 3
+        }, 2000);
 
         var queryString = window.location.search.slice(1)
         var obj = {}
@@ -467,7 +517,7 @@
 
         console.log(obj1, obj)
 
-        document.getElementById('name').innerHTML = obj.name
+        // document.getElementById('name').innerHTML = obj.name
 
         function startQ() {
             state = 1
