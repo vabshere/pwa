@@ -6,13 +6,15 @@
     <title>Phoenix</title>
     <base href="./">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div id="jsonQ" style="display: none"></div>
+    <div id="jsonA" style="display: none"></div>
     <style>
         @font-face {
             font-family: roboto;
             src: url("./Roboto-Medium.ttf")
         }
 
-        body{
+        body {
             max-width: 100vw
         }
 
@@ -91,6 +93,7 @@
             border-bottom: 1px solid rgba(227, 28, 78, 0.5);
             background: #f32121;
         }
+
         a {
             text-decoration: none;
             color: white;
@@ -256,7 +259,7 @@
             z-index: 1;
         }
 
-        .sun{
+        .sun {
             left: 50%;
             width: 56%;
             top: 13%;
@@ -294,15 +297,12 @@
         .button {
             box-shadow: 0px 0px 0px rgba(15, 165, 60, 0.0);
             background: rgba(20, 224, 133, 1);
-            position: absolute;
             z-index: 2;
-            top: 50%;
-            left: 50%;
             padding: 15px;
             font-size: 24px;
-            margin-left: -25%;
         }
-        #welcome{
+
+        #welcome {
             width: 80%;
             font-size: 140%;
             text-align: center;
@@ -317,7 +317,11 @@
         <div class="banner">
             <div class="score" id="welcome">हे प्रश्न सोडवून बनु शक्ता आपण तलाठी|</div>
         </div>
-        <button onclick="startQ()" class="button" style="left: 62%">शुरु करा</button>
+        <div style="position: absolute; top: 50%; left: 0;">
+            <div style="display: flex; flex-flow: row; width: 100vw; justify-content: center; top: 50%;">
+                <button onclick="startQ()" class="button">शुरु करा</button>
+            </div>
+        </div>
     </div>
 
     <div id="questions">
@@ -360,9 +364,13 @@
         <img src="./3.png" alt="" id="sun">
         <div class="banner">
             <div class="score">Your Score: <span id="score"></span></div>
-            <div class="score2">Highest Score: <span>5/5</span></div>
+            <div class="score2">Highest Score: <span id="highScore"></span></div>
         </div>
-        <button class="button">अधिक चाचण्या घ्या</button>
+        <div style="position: absolute; top: 50%; left: 0;">
+            <div style="display: flex; flex-flow: row; width: 100vw; justify-content: center; top: 50%;">
+                <button class="button">अधिक चाचण्या घ्या</button>
+            </div>
+        </div>
     </div>
     <script>
         var state = 0
@@ -375,17 +383,17 @@
         function checkState(state) {
             if (state === 0) {
                 // console.log(state)
-                document.getElementById('start').style.display = 'initial'
+                document.getElementById('start').style.display = 'flex'
                 document.getElementById('questions').style.display = 'none'
                 document.getElementById('finish').style.display = 'none'
             } else if (state === 1) {
                 document.getElementById('start').style.display = 'none'
-                document.getElementById('questions').style.display = 'initial'
+                document.getElementById('questions').style.display = 'flex'
                 document.getElementById('finish').style.display = 'none'
             } else if (state === 2) {
                 document.getElementById('start').style.display = 'none'
                 document.getElementById('questions').style.display = 'none'
-                document.getElementById('finish').style.display = 'initial'
+                document.getElementById('finish').style.display = 'flex'
             }
         }
 
@@ -551,7 +559,7 @@
                 ]
             }
         ]
-
+        var ansArr = [0, 1, 4, 2, 3, 4]
         var length = questions.length
         var i = 0
         var responses = new Array(length)
@@ -562,6 +570,12 @@
         var submitDom = document.getElementById('submit')
         var ans
         var num = document.getElementById('num')
+        document.getElementById('highScore').innerText = length + '/' + length;
+        document.getElementById('jsonQ').textContent = JSON.stringify(questions);
+        document.getElementById('jsonA').textContent = JSON.stringify(ansArr);
+
+        questions = JSON.parse(document.getElementById('jsonQ').textContent)
+        ansArr = JSON.parse(document.getElementById('jsonA').textContent)
 
         num.innerHTML = 1
         document.getElementById('length').innerHTML = length
@@ -659,8 +673,6 @@
                 document.getElementById('score').innerHTML = obj1.score + '/' + length
             }
         }
-
-        var ansArr = [0, 1, 4, 2, 3, 4]
 
         function submit() {
             saveResponses(length - 1, length)
