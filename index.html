@@ -62,7 +62,7 @@
         #next {
             float: right;
             right: 7px;
-            top: 80vh;
+            top: 60vh;
             border-radius: 50%;
             height: 8vh;
             width: 8vh;
@@ -72,7 +72,7 @@
         #previous {
             float: left;
             left: 7px;
-            top: 80vh;
+            top: 60vh;
             border-radius: 50%;
             height: 8vh;
             width: 8vh;
@@ -311,20 +311,19 @@
 </head>
 
 <body>
-    <div id="start" class="finish">
-        <img src="./1.png" alt="" class="bg">
+    <div id="start" class="finish" style="height: 100vh">
         <img src="./5.png" alt="" class="sun">
         <div class="banner">
             <div class="score" id="welcome">हे प्रश्न सोडवून बनु शक्ता आपण तलाठी|</div>
         </div>
         <div style="position: absolute; top: 50%; left: 0;">
             <div style="display: flex; flex-flow: row; width: 100vw; justify-content: center; top: 50%;">
-                <button onclick="startQ()" class="button">शुरु करा</button>
+                <button onclick="callButton(1)" class="button">शुरु करा</button>
             </div>
         </div>
     </div>
 
-    <div id="questions">
+    <div id="questions" style="flex-direction: column;">
         <header>
             Quiz <span id="date"></span>
         </header>
@@ -334,33 +333,32 @@
         <div id="question"></div>
         <div class="options">
             <div class="options1">
-                <div class="radio" onclick="switchRadio(this)">
+                <div class="radio" onclick="callButton(2, this)">
                     <input type="radio" id="option1" name="option" value="0"><span class="checkmark"></span><span
                         id="option1Val" class="spanText"></span><br>
                 </div>
-                <div class="radio" onclick="switchRadio(this)">
+                <div class="radio" onclick="callButton(2, this)">
                     <input type="radio" id="option2" name="option" value="1"><span class="checkmark"></span><span
                         id="option2Val" class="spanText"></span><br>
                 </div>
             </div>
             <div class="options2">
-                <div class="radio" onclick="switchRadio(this)">
+                <div class="radio" onclick="callButton(2, this)">
                     <input type="radio" id="option3" name="option" value="2"><span class="checkmark"></span><span
                         id="option3Val" class="spanText"></span><br>
                 </div>
-                <div class="radio" onclick="switchRadio(this)">
+                <div class="radio" onclick="callButton(2, this)">
                     <input type="radio" id="option4" name="option" value="3"><span class="checkmark"></span><span
                         id="option4Val" class="spanText"></span><br>
                 </div>
             </div>
         </div>
-        <button onclick="previous()" id="previous"><span>&#8249;</span></button>
-        <button onclick="next()" id="next"><span>&#8250;</span></button>
-        <button id="submit" onclick="submit()">&#10003;</button>
+        <button onclick="callButton(3)" id="previous"><span>&#8249;</span></button>
+        <button onclick="callButton(4)" id="next"><span>&#8250;</span></button>
+        <button id="submit" onclick="callButton(5)">&#10003;</button>
     </div>
 
-    <div id="finish">
-        <img src="./1.png" alt="" id="bg">
+    <div id="finish" style="height: 100vh">
         <img src="./3.png" alt="" id="sun">
         <div class="banner">
             <div class="score">Your Score: <span id="score"></span></div>
@@ -368,7 +366,16 @@
         </div>
         <div style="position: absolute; top: 50%; left: 0;">
             <div style="display: flex; flex-flow: row; width: 100vw; justify-content: center; top: 50%;">
-                <button class="button">अधिक चाचण्या घ्या</button>
+                <button onclick="callButton(6)" class="button">अधिक चाचण्या घ्या</button>
+            </div>
+        </div>
+    </div>
+    <div id="modalWrap" style="display: none; height: 100vh; width: 100vw; flex-direction: column; justify-content: center; align-items: center; position: fixed; background: rgba(0, 0, 0, 0.8); z-index: 3;">
+        <div id="modal" style="padding: 16px; border-radius: 5px; width: 75vw; background: white; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div id="text" style="margin-bottom: 4px; font-size: 1.2em">Your details will be shared with Pariskha. Do you want to continue?</div>
+            <div class="buttons" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
+                <button class="button" style="background: rgb(118, 73, 146); position: unset; padding: 6px; font-size: 16px">Confirm</button>
+                <button class="button" style="background: rgb(183, 24, 24); margin-left: 9px; position: unset; padding: 6px; font-size: 16px" onclick="callButton(7)">Cancel</button>
             </div>
         </div>
     </div>
@@ -394,6 +401,32 @@
                 document.getElementById('start').style.display = 'none'
                 document.getElementById('questions').style.display = 'none'
                 document.getElementById('finish').style.display = 'flex'
+            }
+        }
+
+        function callButton(trigCase, data) {
+            switch (trigCase) {
+                case 1:
+                    startQ();
+                    break;
+                case 2:
+                    switchRadio(data);
+                    break;
+                case 3:
+                    previous();
+                    break;
+                case 4:
+                    next();
+                    break;
+                case 5:
+                    submit();
+                    break;
+                case 6:
+                    shareCall();
+                    break;
+                case 7:
+                cancelShare();
+                break;
             }
         }
 
@@ -559,7 +592,7 @@
                 ]
             }
         ]
-        var ansArr = [0, 1, 4, 2, 3, 4]
+        var ansArr = [2, 1, 1, 2, 3, 3]
         var length = questions.length
         var i = 0
         var responses = new Array(length)
@@ -656,6 +689,15 @@
         function submit() {
             state = 2
             checkState(state)
+            console.log("pukara")
+        }
+
+        function shareCall() {
+            document.getElementById("modalWrap").style.display = "flex";
+        }
+
+        function cancelShare(){
+            document.getElementById("modalWrap").style.display = "none";
         }
 
         if (!isNaN(obj1.question)) {
